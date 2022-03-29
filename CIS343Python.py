@@ -6,6 +6,7 @@ import random as Random
 
 #TODO: FIGURE OUT COLLISION RETURNS 
 #TODO: Work on overlay, MAX_SCORE
+#TODO: INPUT, DECREMENT LIVES, INCREMENT SCORE
 
 
 class Game:
@@ -35,7 +36,7 @@ class Game:
         self.__running = False
         """Used to determine if the game should end."""
 
-        self.__screen = Pygame.display.set_mode((screen_width,screen_height))
+        self._screen = Pygame.display.set_mode((screen_width,screen_height))
         """Determines size of game window."""
 
         self.__clock = Pygame.time.Clock()
@@ -67,6 +68,10 @@ class Game:
         """""""""""""""""""""""""""""""""""""""""""""""""""""""""
         The procedures of how the game should operate.
         """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        self.add_bricks()
+        self.add_paddle()
+        self.add_ball()
+        self.add
         while self.__running:
 
             #Gets a list of the user input.
@@ -214,6 +219,14 @@ class Game:
         (default 25).
         """""""""""""""""""""""""""""""""""""""
         self.__score += amount
+
+    def add_overlay(self):
+        """""""""""""""""""""""""""""""""""""""
+        Adds and overlay to the game.
+        """""""""""""""""""""""""""""""""""""""
+        #FIXME:
+        self.__overlay.add(Overlay())
+
 
     
     
@@ -432,7 +445,6 @@ class Brick(Pygame.sprite.Sprite):
             self.image = Pygame.Surface((0,0))
             self.rect.image.get_rect()
 
-    #FIXME: Finish method
     def update(self, coll_group_1 = None):
         """""""""""""""""""""""""""""""""""""""""""""""""""""""""
         Detects any collision with the group stated in the parameters
@@ -468,19 +480,36 @@ class Brick(Pygame.sprite.Sprite):
         return self.__health
     
 
-
-#FIXME: Figure if score and health is needed (might be in Game class)
 class Overlay(Pygame.sprite.Sprite):
+    """""""""""""""""""""""""""""""""""""""""""""""
+    This class serves as a way for the player to
+    see their score and lives for the Breakout game.
+    """""""""""""""""""""""""""""""""""""""""""""""
     
     def __init__(self):
+        """"""""""""""""""""""""""""""""""
+        Constructor for the Overlay class.
+        """""""""""""""""""""""""""""""""
         Pygame.sprite.Sprite.__init__(self)
-        #FIXME: Create text and store into image (rectangle also)
 
-    
-    
-    def update():
-        #FIXME: Finish method
-        pass
+        #FIXME: If issue with font.
+        #Initalize font
+        font = Pygame.font.SysFont(None, 12)
+
+        self.__text = font.render('Lives: 0  Score: 0', True, (0, 0, 0))
+        """The text to be displayed to the player."""
+
+
+    def update(self, lives, score, display):
+        #Text to be displayed for player.
+        text_for_player = 'Lives:', str(lives),"    Score:",str(score)
+
+        #Initalize font
+        font = Pygame.font.SysFont('arial', 12)
+        self.__text = font.render(text_for_player, True, (0,0,0))
+        #FIXME:
+        screen = display
+        screen.blit(self.__text, (200, 550))
 
 
 
