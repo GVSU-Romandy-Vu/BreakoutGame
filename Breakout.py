@@ -363,7 +363,6 @@ class Ball(Pygame.sprite.Sprite):
 #The main method to start the game.
 def main():
     game = Game()
-    #print(Game.lives)
     game.set_running(True)
     Ball.bricks = game.get_bricks()
     Ball.paddle = game.get_paddle()
